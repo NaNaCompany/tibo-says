@@ -1,0 +1,20 @@
+{
+  "slug": "tibo-says",
+  "name": "Tibo Says",
+  "wordmark": "TIBO",
+  "subject": "Thibault Sottiaux",
+  "handle": "thsottiaux",
+  "profile": "https://x.com/thsottiaux",
+  "initials": "TS",
+  "color": "#87764b",
+  "photo": null,
+  "origin": "https://nanalab.kr/tibo-says",
+  "audience": "public",
+  "languages": [
+    "en"
+  ],
+  "coverage": "partial",
+  "content_mode": "official_embeds",
+  "browse_timezone": "UTC",
+  "portrait": "assets/portrait.svg"
+}

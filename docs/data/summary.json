@@ -1,0 +1,34 @@
+{
+  "slug": "tibo-says",
+  "captured_at": "2026-10-28T13:32:36.210246+00:00",
+  "coverage": "partial",
+  "records": 195,
+  "first": "2025-09-17",
+  "last": "2026-10-28",
+  "exact_time": 195,
+  "sources": [
+    {
+      "id": "codex-reset-history",
+      "url": "https://www.codexreset-news.com/api/v1/tibo/history",
+      "creator": "Codex Reset News / codex-reset.com",
+      "attribution": "Data: codex-reset.com",
+      "upstream": "https://codex-reset.com/",
+      "body_rights": "not established; bodies and translations excluded",
+      "coverage_status": "provider explicitly marks complete_history=false",
+      "identity": "Thibault Sottiaux / @thsottiaux, OpenAI Codex; not @tibo_maker",
+      "identity_sources": [
+        "https://x.com/thsottiaux/with_replies",
+        "https://forum.openai.com/public/videos/event-replay-codex-is-for-everyone-why-codex-matters-beyond-code-2026-05-13"
+      ]
+    }
+  ],
+  "post_body_policy": "No scraped bodies, images or third-party summaries redistributed. Only factual post identities, dates and original permalinks; post content is displayed through official platform embeds.",
+  "subject": "Thibault Sottiaux",
+  "account": "thsottiaux",
+  "platform_counts": {
+    "x": 195
+  },
+  "days": 88,
+  "months": 11,
+  "content_mode": "official_embeds"
+}
