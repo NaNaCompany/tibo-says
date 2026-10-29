@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "slug": "tibo-says",
+  "processed_at": "2026-10-29T00:35:39Z",
+  "records": 195,
+  "known_like_counts": 195,
+  "unavailable_like_counts": 0,
+  "observed_zero_counts": 0,
+  "old_posts_sha256": "5c151823f93e8714e40417771cf70ab8b987b55c654cfba6959e335378fccb25",
+  "preserved_fields": "Every original field, record ID, publication date, timestamp, source ID and original URL preserved; only like_count, likes_captured_at and likes_source added.",
+  "unavailable_policy": "Unknown, missing, rounded-only, inaccessible or author/ID-mismatched counts are null, never fabricated as zero.",
+  "text_policy": "No scraped bodies, translations, media or third-party summaries added to the post corpus.",
+  "source": {
+    "url": "https://cdn.syndication.twimg.com/tweet-result",
+    "field": "favorite_count",
+    "matching": "Exact id_str and user.screen_name required",
+    "capture_policy": "UTC time of this public official embed metadata read"
+  },
+  "failures": [],
+  "cached_provider_lacks_likes": true
+}

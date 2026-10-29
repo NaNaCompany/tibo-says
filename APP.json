@@ -16,5 +16,6 @@
   "coverage": "partial",
   "content_mode": "official_embeds",
   "browse_timezone": "UTC",
-  "portrait": "assets/portrait.svg"
+  "portrait": "assets/portrait.svg",
+  "feed_version": "20261029"
 }
