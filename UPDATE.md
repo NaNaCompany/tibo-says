@@ -40,3 +40,10 @@
 - This supersedes the earlier feed's metadata/embed-only display policy. Historical UPDATE entries remain unchanged as records of their release. Source provenance, rights declarations and original snapshot boundaries remain applicable.
 - Existing portraits and their creator/source/license/hash records, four publisher integrations with GTM noscript, local-host request guards, More Apps, original permalinks, static page paths and canonical identities are preserved by the requested change. Source like-count snapshots, repost exclusions, archive navigation and chronological pagination remain part of the feed contract.
 - Release evidence directory: .tools/says-text-first-20261029/. This documentation entry records the requested source/UI policy; it does not by itself establish completed build/tests, commit/push, Pages publication, production HTTP/browser verification or search-engine indexing. The parent release workflow records those outcomes separately.
+
+## 2026-11-02 — Shared book banner
+
+- Connected all public page types to `https://nanalab.kr/src_cdn/banner/astra.js`. Campaign, design, translated controls and the supplied YES24 book destination are maintained centrally in src_cdn.
+- Shared archive assets load the banner on detail/list pages; other HTML and source templates include the stable deferred loader. HTML-only generator adapters retain the connection after rebuilds and pass non-HTML values through unchanged.
+- The component is closable for the tab session, clears detected bottom navigation, and hides for modals/fullscreen/mobile input. The Astra practice site remains excluded. No additional analytics or ad-network requests are introduced by the component.
+- Existing content, routes and publisher integrations are preserved. Direct HTML changes restore exactly to the baseline when the marked loader is removed. Workspace validation/deployment evidence: `.tools/shared-book-banner-20261102/`.
