@@ -1,8 +1,8 @@
 {
   "status": "passed",
-  "posts_considered": 195,
+  "posts_considered": 201,
   "known_like_counts": 195,
-  "unknown_like_counts": 0,
+  "unknown_like_counts": 6,
   "popular_ids": [
     "x-2095651088502591861",
     "x-2097043464538264003",
@@ -106,8 +106,14 @@
     "x-2109045392684032299"
   ],
   "popular_count": 100,
-  "latest_count": 95,
+  "latest_count": 101,
   "latest_ids": [
+    "x-2118146834325733453",
+    "x-2118146794362405231",
+    "x-2118138764161913278",
+    "x-2117035794678546764",
+    "x-2116692529970311254",
+    "x-2116405414921384099",
     "x-2115329600897319076",
     "x-2115299029294920189",
     "x-2115290318652444729",
@@ -205,7 +211,7 @@
     "x-1968163721034994139"
   ],
   "page_size": 20,
-  "html_feed_pages": 5,
+  "html_feed_pages": 6,
   "home_latest_count": 20,
   "duplicate_popular_latest": false,
   "like_policy": "Known source snapshot integers only; null is not zero. Ties use newest collected time.",

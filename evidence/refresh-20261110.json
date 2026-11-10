@@ -1,0 +1,113 @@
+{
+  "checked_at": "2026-11-10T12:18:29.675999+00:00",
+  "slug": "tibo-says",
+  "records_before": 195,
+  "records_after": 201,
+  "added_ids": [
+    "x-2117035794678546764",
+    "x-2116692529970311254",
+    "x-2116405414921384099",
+    "x-2118146834325733453",
+    "x-2118146794362405231",
+    "x-2118138764161913278"
+  ],
+  "coverage": "partial; selective verified permalink additions, not complete account collection",
+  "coverage_before": "2026-10-28",
+  "coverage_after": "2026-11-05",
+  "body_policy": "No new post body, image or third-party summary redistributed. Official oEmbed used only to verify author and permalink; unknown text/media/likes remain unavailable. Existing overlays unchanged.",
+  "policy_urls": [
+    "https://x.com/en/tos",
+    "https://help.x.com/en/using-x/how-to-embed-a-post"
+  ],
+  "access_attempts": [
+    {
+      "slug": "tibo-says",
+      "id": "2117035794678546764",
+      "handle": "thsottiaux",
+      "endpoint": "https://publish.twitter.com/oembed?url=https://x.com/thsottiaux/status/2117035794678546764&omit_script=true",
+      "http_status": 200,
+      "author_verified": true,
+      "author_url": "https://x.com/thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2117035794678546764",
+      "raw_sha256": "c3ddad5e48631208c7069ea9a4b83a6392c931b381e6532d4bcf4e0a6bb37a78",
+      "author_name": "Tibo"
+    },
+    {
+      "slug": "tibo-says",
+      "id": "2116692529970311254",
+      "handle": "thsottiaux",
+      "endpoint": "https://publish.twitter.com/oembed?url=https://x.com/thsottiaux/status/2116692529970311254&omit_script=true",
+      "http_status": 200,
+      "author_verified": true,
+      "author_url": "https://x.com/thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2116692529970311254",
+      "raw_sha256": "2f6987bfafd3b357b3419a5e5c5358d7c198ab2cfe948e5bffc425741885f7c1",
+      "author_name": "Tibo"
+    },
+    {
+      "slug": "tibo-says",
+      "id": "2116405414921384099",
+      "handle": "thsottiaux",
+      "endpoint": "https://publish.twitter.com/oembed?url=https://x.com/thsottiaux/status/2116405414921384099&omit_script=true",
+      "http_status": 200,
+      "author_verified": true,
+      "author_url": "https://x.com/thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2116405414921384099",
+      "raw_sha256": "6ed24153ce4031beff74d807d757c4e29775b0485d9a7a0ca34ec12414db38f4",
+      "author_name": "Tibo"
+    },
+    {
+      "slug": "tibo-says",
+      "id": "2118146834325733453",
+      "handle": "thsottiaux",
+      "endpoint": "https://publish.twitter.com/oembed?url=https://x.com/thsottiaux/status/2118146834325733453&omit_script=true",
+      "http_status": 200,
+      "author_verified": true,
+      "author_url": "https://x.com/thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2118146834325733453",
+      "raw_sha256": "09d7dd966793ea0a2d6f5ea04ac6ba68e245ac6213e3d5e968c575021e391cfe",
+      "author_name": "Tibo"
+    },
+    {
+      "slug": "tibo-says",
+      "id": "2118146794362405231",
+      "handle": "thsottiaux",
+      "endpoint": "https://publish.twitter.com/oembed?url=https://x.com/thsottiaux/status/2118146794362405231&omit_script=true",
+      "http_status": 200,
+      "author_verified": true,
+      "author_url": "https://x.com/thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2118146794362405231",
+      "raw_sha256": "ff98c1ffc0b276641250b43896fc4c2493e5bf26cfcb13df0131bbc406b9e36d",
+      "author_name": "Tibo"
+    },
+    {
+      "slug": "tibo-says",
+      "id": "2118138764161913278",
+      "handle": "thsottiaux",
+      "endpoint": "https://publish.twitter.com/oembed?url=https://x.com/thsottiaux/status/2118138764161913278&omit_script=true",
+      "http_status": 200,
+      "author_verified": true,
+      "author_url": "https://x.com/thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2118138764161913278",
+      "raw_sha256": "31e95dd88ef128ed5c33b812ad4200940b71046cb6809570690c6dbde624de00",
+      "author_name": "Tibo"
+    }
+  ],
+  "tests": {
+    "build": "passed",
+    "static_check": "passed",
+    "node_tests": "39/39 passed",
+    "browser_qa": "not run",
+    "publication": "not pushed or deployed"
+  },
+  "classification_policy": "Reply/quote/native-repost status is not inferred from oEmbed; new records leave subtype unknown. Matching official author and canonical post identity are verified.",
+  "discovery_sources": [
+    "https://digintoai.com/en/reset",
+    "https://www.llmrates.ai/ai-digest/2026-11-05"
+  ],
+  "preservation_checks": {
+    "existing_records_unchanged": true,
+    "existing_text_overlay_bytes_unchanged": true,
+    "production_runtime_unchanged": true
+  }
+}

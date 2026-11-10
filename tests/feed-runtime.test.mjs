@@ -27,6 +27,7 @@ class Element{
   getAttribute(k){if(k==='id')return this.id??null;if(k==='href')return this.href??null;if(k==='class')return this.className||null;if(k.startsWith('data-'))return this.dataset[k.slice(5).replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]??null;return this.attrs[k]??(typeof this[k]==='string'?this[k]:null);}
   removeAttribute(k){delete this.attrs[k];if(['href','type','id'].includes(k))delete this[k];}
   append(...nodes){for(const node of nodes){if(node?.nodeType===11){this.append(...[...node.children]);continue;}if(node&&typeof node==='object'){node.remove();node.parentNode=this;node.ownerDocument=this.ownerDocument;}this.children.push(node);}}
+  appendChild(node){this.append(node);return node;}
   insertBefore(node,before){node.remove();const index=this.children.indexOf(before);if(index<0){this.append(node);return;}node.parentNode=this;node.ownerDocument=this.ownerDocument;this.children.splice(index,0,node);}
   replaceChildren(...nodes){this._text='';for(const c of this.children)if(c&&typeof c==='object')c.parentNode=null;this.children=[];this.append(...nodes);}
   remove(){if(this.parentNode){this.parentNode.children=this.parentNode.children.filter(c=>c!==this);this.parentNode=null;}}
@@ -99,7 +100,7 @@ function setup(options={}){
  class IO{constructor(fn){this.fn=fn;this.targets=new Set();ios.push(this);}observe(e){this.targets.add(e);}unobserve(e){this.targets.delete(e);}fire(e){this.fn([{target:e,isIntersecting:true}]);}}
  class MO{constructor(fn){this.fn=fn;mutations.push(this);}observe(){}}
  const hostname=options.hostname||'localhost',origin=hostname==='localhost'?'http://localhost:8790':'https://'+hostname;
- const context={document:doc,location:{href:origin+'/example-says/'},URL,Intl,Date,console,DOMParser:Parser,AbortController,
+ const context={document:doc,location:{href:origin+'/example-says/',hostname,pathname:'/example-says/'},URL,Intl,Date,console,DOMParser:Parser,AbortController,
  setTimeout:fn=>{timers.set(++timerId,fn);return timerId;},clearTimeout:id=>timers.delete(id),
  fetch:async(url,opts)=>{requests.push({url,opts});if(options.fetch)return options.fetch(url,opts,requests.length);return {ok:true,url,headers:{get:()=> 'text/html'},text:async()=>fixturePage([row('198','2026-10-28T09:00:00Z')])};},
  addEventListener:(...args)=>doc.addEventListener(...args),innerHeight:812,MutationObserver:MO};
@@ -143,7 +144,7 @@ test('text-first lists have no platform requests or frames on production or loca
  for(const hostname of ['localhost','nanalab.kr']){
   let embeds=0;const s=setup({hostname,initial:[row('200','2026-10-28T10:00:00Z',{text:'Actual post body'}),row('199','2026-10-28T09:00:00Z',{text:null})],embed:async()=>{embeds++;return {};}});await flush();
   for(const cardElement of s.latest.children)s.ios[0].fire(cardElement);await flush();
-  assert.equal(s.doc.head.children.length,0);assert.equal(s.doc.querySelectorAll('iframe').length,0);assert.equal(s.doc.querySelectorAll('[data-feed-embed]').length,0);assert.equal(s.doc.querySelectorAll('[data-feed-action="embed"]').length,0);assert.equal(embeds,0);assert.equal(s.requests.length,0);
+  assert.equal(s.doc.head.children.filter(node=>node.src!=='https://nanalab.kr/src_cdn/banner/astra.js').length,0);assert.equal(s.doc.querySelectorAll('iframe').length,0);assert.equal(s.doc.querySelectorAll('[data-feed-embed]').length,0);assert.equal(s.doc.querySelectorAll('[data-feed-action="embed"]').length,0);assert.equal(embeds,0);assert.equal(s.requests.length,0);
   assert.equal(s.latest.children[0].querySelector('.feed-text').textContent,'Actual post body');assert.equal(s.latest.children[0].querySelector('.feed-text-link').href,'/example-says/posts/x-200.html');assert.match(s.latest.children[1].querySelector('.feed-text').textContent,/Source text unavailable/);
  }
 });
@@ -155,7 +156,7 @@ test('hydration replaces legacy SSR embed controls with the exact text and detai
 
 test('month shuffle cards become text-only even with automatic embed config accidentally enabled',async()=>{
  let embeds=0;const s=setup({hostname:'nanalab.kr',noFeed:true,config:{autoEmbeds:true},embed:async()=>{embeds++;return {};}});const original=row('200','2026-10-28T10:00:00Z',{text:'Shuffled source text'});const e=s.api.createCard(original);s.doc.body.append(e);s.mutations[0].fn([{addedNodes:[e]}]);await flush();
- assert.equal(e.querySelector('.feed-text').textContent,original.text);assert.equal(e.querySelector('.feed-text-link').href,original.permalink);assert.equal(s.doc.querySelectorAll('iframe').length,0);assert.equal(s.doc.head.children.length,0);assert.equal(embeds,0);
+ assert.equal(e.querySelector('.feed-text').textContent,original.text);assert.equal(e.querySelector('.feed-text-link').href,original.permalink);assert.equal(s.doc.querySelectorAll('iframe').length,0);assert.equal(s.doc.head.children.filter(node=>node.src!=='https://nanalab.kr/src_cdn/banner/astra.js').length,0);assert.equal(embeds,0);
 });
 
 test('the lazy observer watches pagination sentinel only, never individual text cards',()=>{
@@ -170,7 +171,7 @@ test('missing, empty and media-only source text have truthful linked fallbacks w
 
 test('all supported platforms render text links rather than platform embeds on lists',async()=>{
  const cases=[row('200','2026-10-28T10:00:00Z',{text:'X post'}),row('123','2026-10-28T10:00:00Z',{id:'truth:123',platform:'truth',original_url:'https://truthsocial.com/@realDonaldTrump/posts/123',permalink:'/example-says/posts/truth-123.html',text:'Truth post'}),row('124','2026-10-28T10:00:00Z',{id:'archive-124',platform:'facebook',original_url:'https://www.facebook.com/zuck/posts/124',permalink:'/example-says/posts/archive-124.html',text:'Facebook post'}),row('125','2026-10-28T10:00:00Z',{id:'archive-125',platform:'threads',original_url:'https://www.threads.com/@zuck/post/ABC',permalink:'/example-says/posts/archive-125.html',text:'Threads post'}),row('126','2026-10-28T10:00:00Z',{id:'archive-126',platform:'instagram',original_url:'https://www.instagram.com/p/ABC/',permalink:'/example-says/posts/archive-126.html',text:'Instagram post'})];
- const s=setup({hostname:'nanalab.kr',initial:cases});await flush();assert.deepEqual(s.latest.children.map(e=>e.querySelector('.feed-text').textContent),cases.map(r=>r.text));assert.equal(s.doc.head.children.length,0);assert.equal(s.doc.querySelectorAll('iframe').length,0);assert.equal(s.requests.length,0);
+ const s=setup({hostname:'nanalab.kr',initial:cases});await flush();assert.deepEqual(s.latest.children.map(e=>e.querySelector('.feed-text').textContent),cases.map(r=>r.text));assert.equal(s.doc.head.children.filter(node=>node.src!=='https://nanalab.kr/src_cdn/banner/astra.js').length,0);assert.equal(s.doc.querySelectorAll('iframe').length,0);assert.equal(s.requests.length,0);
 });
 
 test('archive menu opens, traps focus, closes with Escape/outside click and restores trigger focus',()=>{
@@ -200,7 +201,7 @@ test('SSR menu avoids a menu request and header archive action opens the same pa
 });
 
 test('list text stays plaintext, preserves line breaks, links to detail and formats DST-aware time',async()=>{
- const body='<img src=x onerror=EVIL()> literal\nActual line two';const s=setup({hostname:'nanalab.kr',config:{displayTimezone:'America/New_York'},initial:[]});const r=row('200','2026-07-01T01:02:03Z',{text:body});const item=s.api.createCard(r);s.latest.append(item);s.api.hydrate(item);await flush();assert.equal(item.querySelector('.feed-text').textContent,body);assert.equal(item.querySelector('.feed-text-link').href,r.permalink);assert.equal(item.querySelector('img'),null);assert.match(item.querySelector('time').textContent,/2026-06-30 · 21:02:03 GMT-4/);assert.equal(s.doc.head.children.length,0);
+ const body='<img src=x onerror=EVIL()> literal\nActual line two';const s=setup({hostname:'nanalab.kr',config:{displayTimezone:'America/New_York'},initial:[]});const r=row('200','2026-07-01T01:02:03Z',{text:body});const item=s.api.createCard(r);s.latest.append(item);s.api.hydrate(item);await flush();assert.equal(item.querySelector('.feed-text').textContent,body);assert.equal(item.querySelector('.feed-text-link').href,r.permalink);assert.equal(item.querySelector('img'),null);assert.match(item.querySelector('time').textContent,/2026-06-30 · 21:02:03 GMT-4/);assert.equal(s.doc.head.children.filter(node=>node.src!=='https://nanalab.kr/src_cdn/banner/astra.js').length,0);
 });
 
 test('without IntersectionObserver manual HTML pagination remains available',async()=>{
@@ -218,7 +219,7 @@ test('pagination and createCard preserve preview source/status/truncation metada
 });
 
 test('fetched HTML text containing markup and script delimiters stays literal inert text',async()=>{
- const body='<script>EVIL()</script>\n<img src=x onerror=EVIL()> @Example';const s=setup({fetch:async(url)=>({ok:true,url,text:async()=>fixturePage([row('198','2026-10-28T09:00:00Z',{text:body})],{next:null})})});assert.equal(await s.api.loadMore(),true);const e=s.latest.children.at(-1);assert.equal(e.querySelector('.feed-text').textContent,body);assert.equal(e.querySelectorAll('img').length,0);assert.equal(e.querySelectorAll('iframe').length,0);assert.equal(e.querySelectorAll('script').length,1);assert.equal(e.querySelector('script').type,'application/json');assert.equal(s.doc.head.children.length,0);
+ const body='<script>EVIL()</script>\n<img src=x onerror=EVIL()> @Example';const s=setup({fetch:async(url)=>({ok:true,url,text:async()=>fixturePage([row('198','2026-10-28T09:00:00Z',{text:body})],{next:null})})});assert.equal(await s.api.loadMore(),true);const e=s.latest.children.at(-1);assert.equal(e.querySelector('.feed-text').textContent,body);assert.equal(e.querySelectorAll('img').length,0);assert.equal(e.querySelectorAll('iframe').length,0);assert.equal(e.querySelectorAll('script').length,1);assert.equal(e.querySelector('script').type,'application/json');assert.equal(s.doc.head.children.filter(node=>node.src!=='https://nanalab.kr/src_cdn/banner/astra.js').length,0);
 });
 
 test('overlength or uncleared fetched preview text rejects the entire page without changing the existing list',async()=>{
@@ -228,7 +229,7 @@ test('overlength or uncleared fetched preview text rejects the entire page witho
 });
 
 test('detail pages are untouched by shared list hydration, including historical repost records',async()=>{
- const s=setup({noFeed:true,config:{listTextOnly:false,allowText:true,autoEmbeds:true}});const r={...baseRows[0],is_repost:true,text:null};const existing=card(s.doc,r);const body=make(s.doc,'blockquote',{},'Existing full detail body');const frame=make(s.doc,'iframe',{src:'https://platform.twitter.com/detail'});existing.append(body,frame);s.doc.body.append(existing);s.mutations[0].fn([{addedNodes:[existing]}]);await flush();assert.equal(existing.isConnected,true);assert.equal(frame.isConnected,true);assert.equal(existing.querySelector('blockquote').textContent,'Existing full detail body');assert.equal(existing.querySelector('.feed-text-link'),null);assert.equal(s.requests.length,0);assert.equal(s.doc.head.children.length,0);assert.throws(()=>s.api.validateRecord(r),/Repost excluded/);
+ const s=setup({noFeed:true,config:{listTextOnly:false,allowText:true,autoEmbeds:true}});const r={...baseRows[0],is_repost:true,text:null};const existing=card(s.doc,r);const body=make(s.doc,'blockquote',{},'Existing full detail body');const frame=make(s.doc,'iframe',{src:'https://platform.twitter.com/detail'});existing.append(body,frame);s.doc.body.append(existing);s.mutations[0].fn([{addedNodes:[existing]}]);await flush();assert.equal(existing.isConnected,true);assert.equal(frame.isConnected,true);assert.equal(existing.querySelector('blockquote').textContent,'Existing full detail body');assert.equal(existing.querySelector('.feed-text-link'),null);assert.equal(s.requests.length,0);assert.equal(s.doc.head.children.filter(node=>node.src!=='https://nanalab.kr/src_cdn/banner/astra.js').length,0);assert.throws(()=>s.api.validateRecord(r),/Repost excluded/);
 });
 
 test('text metadata type checks reject malformed status/source identifiers and truncation flags',()=>{
@@ -246,4 +247,8 @@ test('dynamic cards distinguish captured, partial, description and unavailable s
  const s=setup();for(const [status,text,pattern]of [['full-source','Body',/^Captured source text\.$/],['partial-source','Body',/^Partial source text; the original may contain more\.$/],['official-description','Body',/^Official original-page description; not a full post transcript\.$/],['unavailable',null,/^Source text unavailable\.$/]]){
   const e=s.api.createCard({...baseRows[0],text_status:status,text});const note=e.querySelector('.feed-text-note');assert.match(note.textContent,pattern);assert.equal(note.dataset.textStatus,status);assert.equal(note.parentNode,e);assert.equal(e.querySelector('.feed-meta').parentNode,e);assert.equal(e.querySelectorAll('[data-feed-action="embed"]').length,0);
  }
+});
+
+test("publisher banner stays enabled only on production hosts",()=>{
+ for(const hostname of ["localhost","nanalab.kr"]){const s=setup({hostname});const scripts=s.doc.head.children.filter(node=>node.src==="https://nanalab.kr/src_cdn/banner/astra.js");assert.equal(scripts.length,hostname==="localhost"?0:1);}
 });

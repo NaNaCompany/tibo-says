@@ -1,11 +1,11 @@
 {
   "slug": "tibo-says",
-  "captured_at": "2026-10-28T13:32:36.210246+00:00",
+  "captured_at": "2026-11-10T12:18:29.675999+00:00",
   "coverage": "partial",
-  "records": 195,
+  "records": 201,
   "first": "2025-09-17",
-  "last": "2026-10-28",
-  "exact_time": 195,
+  "last": "2026-11-05",
+  "exact_time": 201,
   "sources": [
     {
       "id": "codex-reset-history",
@@ -20,8 +20,26 @@
         "https://x.com/thsottiaux/with_replies",
         "https://forum.openai.com/public/videos/event-replay-codex-is-for-everyone-why-codex-matters-beyond-code-2026-05-13"
       ]
+    },
+    {
+      "id": "x-official-oembed-20261110",
+      "url": "https://publish.twitter.com/oembed",
+      "redistributed_fields": [
+        "post_id",
+        "original_url",
+        "author",
+        "ID-derived creation timestamp"
+      ],
+      "body_rights": "Standalone body reuse not established; no new bodies or media stored",
+      "selection": "6 selectively discovered permalinks verified by official author_url and canonical post URL; not full account coverage"
     }
   ],
   "failures": [],
-  "post_body_policy": "No scraped bodies, images or third-party summaries redistributed. Only factual post identities, dates and original permalinks; post content is displayed through official platform embeds."
+  "post_body_policy": "No scraped bodies, images or third-party summaries redistributed. Only factual post identities, dates and original permalinks; post content is displayed through official platform embeds.",
+  "refresh": {
+    "checked_at": "2026-11-10T12:18:29.675999+00:00",
+    "added_records": 6,
+    "coverage": "partial",
+    "evidence": "evidence/refresh-20261110.json"
+  }
 }

@@ -3,18 +3,18 @@
   "slug": "tibo-says",
   "subject": "Thibault Sottiaux",
   "handle": "thsottiaux",
-  "posts": 195,
-  "months": 11,
-  "days": 88,
-  "html_pages": 303,
+  "posts": 201,
+  "months": 12,
+  "days": 91,
+  "html_pages": 314,
   "sitemap_leaves": [
     {
       "file": "sitemap-main.xml",
-      "urls": 108
+      "urls": 113
     },
     {
       "file": "sitemap-posts-01.xml",
-      "urls": 195
+      "urls": 201
     }
   ],
   "home_corpus_requests": 0,
